@@ -4,15 +4,6 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+I am Physicist from Universidad de Antioquia (B.S.) and Universidade de São Paulo (M.S. - Ph.D.). My main interests are Dynamical Systems theory and applications and Plasma Physics research. During my post-docs I have also researched modal coupling for Atmospheric Dynamics and numerical methods applied to Chaotic Dynamics.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+Currently I work as a post-doc researcher in Ressacada de Pesquisas em Meio Ambiente at Universidade de Santa Catarina (Brazil). My activities mainly involve the development of the numerical simmulators for the advection in porous mediums and other related problems. This site is intended to share information that I found valuable and might provide insight for other scientists that require more advanced programming tools for their survival in non-academic environments.
