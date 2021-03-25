@@ -12,4 +12,4 @@ This site is intended to share information that I consider valuable and might pr
 
 Happy code survival!
 
-[MyFoto]: _images/profile.jpg
+[MyFoto]: https://github.com/david-ciro/david-ciro.github.io/blob/master/_images/profile.jpg
