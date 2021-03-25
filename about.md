@@ -12,4 +12,4 @@ Currently I work as a post-doc researcher in Ressacada de Pesquisas em Meio Ambi
 
 This site is intended to share information that I consider valuable and might provide insight for other scientists that require more advanced programming tools for their survival in non-academic environments, or maybe improving their workflow in academic setups. I am not a professional programmer, so, take everything you read with a grain of salt. If you have important observations please kindly proceed to the discussion section.
 
-Happy code survival!
+Happy survival coding!
