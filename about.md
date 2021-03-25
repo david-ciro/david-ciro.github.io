@@ -12,4 +12,4 @@ This site is intended to share information that I consider valuable and might pr
 
 Happy code survival!
 
-[MyFoto]: _images/profile.png
+[MyFoto]: _images/profile.jpg
