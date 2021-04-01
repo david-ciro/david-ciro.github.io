@@ -98,9 +98,9 @@ void print(particle ph, FILE* f){
   fprintf(f, "mass: %.6e\n", p->m);
 }
 {% endhighlight %}
-Here, the letter `h` was added to the names of the handlers in the arguments, which are casted back to pointers to the actual type `particle_t`. This allow us to use the arrow `(->)` operator to access the internal state of the particle.
+Here, the letter `h` was added to the names of the handlers in the arguments, which are casted back to pointers to the actual type `particle_t`. This allow us to use the arrow `(->)` operator to access the internal state of the particle in the implementation files.
 
-In general, opaque pointers are seen are a way to hide the implementation details of an interface from ordinary clients, and in practice that is the case. However, they tend to make the APIs more direct, readable and secure, as well as the resulting programs. For instance:
+In general, opaque pointers are seen as a way to hide the implementation details of an interface from ordinary clients, and in practice that is the case, however, I think that *implementation separation* is more accurate. This practice tend to make the APIs more direct, readable and secure, as well as the resulting programs. For instance:
 
 {% highlight C %}
 // main.c
@@ -108,14 +108,19 @@ In general, opaque pointers are seen are a way to hide the implementation detail
 
 int main()
 {
-  particle p1, p2;
+  particle p1 = create()
+  particle p2 = create();
   set_mass(p1, 1.0);
   set_mass(p2, 2.5);
   // inelastic collision
-  particle p3;
+  particle p3 = create();
   set_mass(p3, get_mass(p1) + get_mass(p2));
   // show particle in terminal
   print(p3, stdout);
+
+  destroy(p1);
+  destroy(p2);
+  destroy(p3);
 }
 
 
