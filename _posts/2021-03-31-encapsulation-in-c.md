@@ -47,6 +47,10 @@ This is done in many situations and creates a level of indirection that *persuad
 
 typedef struct particle_t* particle;
 
+particle create();
+
+void destroy(particle);
+
 void set_mass (particle p, double m);
 
 double get_mass (particle p);
@@ -67,6 +71,16 @@ typedef struct {
   double m; // mass
   // other parameters
 } particle_t;
+
+particle create(){
+  particle_t* p = (particle_t*) malloc (sizeof(particle_t));
+  return (particle) p;
+}
+
+void destroy(particle ph){
+  particle_t* p = (particle_t*)ph;
+  free(p);
+}
 
 void set_mass (particle ph, double m){
   particle_t* p = (particle_t*)ph;
