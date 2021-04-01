@@ -112,17 +112,19 @@ int main()
   particle p2 = create();
   set_mass(p1, 1.0);
   set_mass(p2, 2.5);
+  // some process with particles 1 and 2
+
   // inelastic collision
   particle p3 = create();
   set_mass(p3, get_mass(p1) + get_mass(p2));
-  // show particle in terminal
-  print(p3, stdout);
-
   destroy(p1);
   destroy(p2);
+  // some process with particle 3
+
+  // show particle in terminal
+  print(p3, stdout);
   destroy(p3);
 }
-
-
-
 {% endhighlight %}
+
+In this example, two particles are created, attributed different masses and some process occurs with them. Then, the particles undergo a (non-relativistic) inelastic collision, which is simulated by creating a new particle with their combined masses and immediately destroying them. This guarantees that they are no longer available for other processes and the only relevant particle is `p3`.
