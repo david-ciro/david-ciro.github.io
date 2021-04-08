@@ -95,8 +95,7 @@ rgb_get_param(rigid_body rgb, rgb_param name);
 {% endhighlight C %}
 
 which results in a far more compact header file.
-
-For the implementation side it leads also to very readable and scalable code with an easy to follow pattern, for instance
+For the implementation side it leads also to very readable and scalable code with an easy to follow pattern, for instance:
 
 {% highlight C %}
 // rigid_body.c
@@ -198,3 +197,8 @@ rgb_set_param(rigid_body rgb_h, rgb_param name, double value)
     }
 }
 {% endhighlight C %}
+
+And a similar format for the get function. Adding new parameters generates little code footprint and only implies a new block on the seg/get methods. The complete code for this module can be accessed in the [examples repository](https://github.com/david-ciro/dciro-examples).
+
+# Computational cost
+It might appear that the use of large switch statements leads to a large computational overhead since all parameters must be matched to their corresponding case before performing the operations instead of using a direct method, however, the resulting overhead is quite small (about 15% for the experiments performed). Check the [examples](https://github.com/david-ciro/dciro-examples) under the `dbg/` folder for a direct comparison between the computational times for a large number of random direct accesses vs accesses by name.
