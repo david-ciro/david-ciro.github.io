@@ -56,6 +56,7 @@ can be used to set and get the individual components of all the vectors tensors 
 To simplify the setting and getting we can create an enumeration that contains identifiers or names for the relevant parameters. For instance:
 
 {% highlight C %}
+// rigid_body.h
 typedef enum
 {
     // the total mass
@@ -82,3 +83,15 @@ typedef enum
 }
 rgb_param;
 {% endhighlight C %}
+
+Since all the parameters are `double` we can define a single pair to access them using the newly defined enum type
+
+{% highlight C %}
+void
+rgb_set_param(rigid_body rgb, rgb_param name, double value);
+
+double
+rgb_get_param(rigid_body rgb, rgb_param name);
+{% endhighlight C %}
+
+which results in a far more compact header file.
