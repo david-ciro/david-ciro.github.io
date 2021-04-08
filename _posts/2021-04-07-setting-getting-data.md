@@ -95,3 +95,106 @@ rgb_get_param(rigid_body rgb, rgb_param name);
 {% endhighlight C %}
 
 which results in a far more compact header file.
+
+For the implementation side it leads also to very readable and scalable code with an easy to follow pattern, for instance
+
+{% highlight C %}
+// rigid_body.c
+
+typedef struct
+{
+    double  m;
+    double* I; // {Ixx, Iyy, Izz, Ixy, Ixz, Iyz}
+    double* x; // {x, y, z}
+    double* v; // {vx, vy, vz}
+    double* w; // {wx, wy, wz}
+    // other params
+} rigid_body_t;
+
+void
+rgb_set_param(rigid_body rgb_h, rgb_param name, double value)
+{
+    rigid_body_t* rgb = (rigid_body_t*)rgb_h;
+    switch (name) {
+        case rgb_m:
+            if (value > 0)
+                rgb->m = value;
+            else
+                fprintf(stderr, "rgb_set_param: invalid mass\n");
+            break;
+
+        case rgb_Ixx:
+            if (value > 0)
+                rgb->I[0] = value;
+            else
+                fprintf(stderr, "rgb_set_param: invalid Ixx\n");
+            break;
+
+        case rgb_Iyy:
+            if (value > 0)
+                rgb->I[1] = value;
+            else
+                fprintf(stderr, "rgb_set_param: invalid Iyy\n");
+            break;
+
+        case rgb_Izz:
+            if (value > 0)
+                rgb->I[2] = value;
+            else
+                fprintf(stderr, "rgb_set_param: invalid Izz\n");
+            break;
+
+        case rgb_Ixy:
+            rgb->I[3] = value;
+            break;
+
+        case rgb_Ixz:
+            rgb->I[4] = value;
+            break;
+
+        case rgb_Iyz:
+            rgb->I[5] = value;
+            break;
+
+        case rgb_x:
+            rgb->x[0] = value;
+            break;
+
+        case rgb_y:
+            rgb->x[1] = value;
+            break;
+
+        case rgb_z:
+            rgb->x[2] = value;
+            break;
+
+        case rgb_vx:
+            rgb->v[0] = value;
+            break;
+
+        case rgb_vy:
+            rgb->v[1] = value;
+            break;
+
+        case rgb_vz:
+            rgb->v[2] = value;
+            break;
+
+        case rgb_wx:
+            rgb->w[0] = value;
+            break;
+
+        case rgb_wy:
+            rgb->w[1] = value;
+            break;
+
+        case rgb_wz:
+            rgb->w[2] = value;
+            break;
+
+        default:
+            fprintf(stderr, "rgb_set_param: unknown param name\n");
+            break;
+    }
+}
+{% endhighlight C %}
