@@ -84,7 +84,10 @@ void destroy(particle ph){
 
 void set_mass (particle ph, double m){
   particle_t* p = (particle_t*)ph;
-  p->m = m
+  if (m > 0)
+    p->m = m;
+  else
+    fprintf(stderr, "set_mass: mass must be positive\n");
 }
 
 double get_mass (particle ph){
@@ -94,13 +97,18 @@ double get_mass (particle ph){
 
 void print(particle ph, FILE* f){
   particle_t* p = (particle_t*)ph;
-  fprintf(f, "particle: %p", p);
-  fprintf(f, "mass: %.6e\n", p->m);
+  if (f != NULL){
+    fprintf(f, "particle: %p", p);
+    fprintf(f, "mass: %.6e\n", p->m);
+  } else {
+    fprintf(stderr, "print: file not open\n");
+  }
 }
 {% endhighlight %}
-Here, the letter `h` was added to the names of the handlers in the functions\` arguments, which are casted back to pointers to the actual type `particle_t`. This allows the developer to use the arrow `(->)` operator to access the internal state of the particle in the implementation files.
 
-In general, opaque pointers are seen as a way to hide the implementation details of an interface from ordinary clients, and in practice that is the case, however, I think that *implementation separation* is more accurate. This practice tends to make the APIs more direct, readable and secure, as well as the resulting programs. For instance:
+Here, the letter `h` was added to the names of the handlers in the functions\` arguments, which are casted back to pointers to the actual type `particle_t`. This allows the developer to use the arrow `(->)` operator to access the internal state of the particle in the implementation files. Notice also, that using *setters* and *getters* also allows to check the user input before performing assignments or other operations, so that relevant messages can be generated to identify the possible sources of error in the usage.
+
+In general, opaque pointers are seen as a way to hide the implementation details of an interface from ordinary clients, and in practice that is the case when binaries are provided instead of the implementation files, however, when the implementation files are available, a better term is *implementation separation*, since it allows advanced users to make improvements while regular users do not need to worry about the implementation. This practice tends to make the APIs more direct, readable and secure, as well as the resulting programs using the libraries. For instance:
 
 {% highlight C %}
 // main.c

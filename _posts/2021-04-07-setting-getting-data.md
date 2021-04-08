@@ -16,15 +16,69 @@ double get_param(object obj, object_param param_name);
 where `object` is the handler name and `object_param` is an enumerate type containing a list of names that identify the readable and editable parameters of the object.
 
 # Example: Rigid body
-To better illustrate this point, consider the dynamical properties of a rigid body, i.e. its mass, inertia tensor, angular velocities about its main axis, location and velocity of the center of mass, etc. The mentioned properties add up to 16 parameters due to the symmetries of the tensor. To simplify iterative calculations it is convenient to separate the setters and getters in 5 groups with the corresponding arguments for the components, for instance:
+To better illustrate this point, consider the dynamical properties of a rigid body, i.e. its mass, inertia tensor, angular velocities about its main axes, location and velocity of the center of mass, etc. The mentioned properties add up to 16 parameters due to the symmetries of the tensor. To simplify iterative calculations it is convenient to separate the setters and getters in 5 groups with the corresponding arguments for the components, for instance:
 
 {% highlight C %}
 // rigid_body.h
+
+typedef struct rigid_body_h* rigid_body;
+
+double
+rgb_get_m(rigid_body rgb);
+
 void
 rgb_set_Iij(rigid_body rgb, size_t i, size_t j, double Iij);
 
 double
 rgb_get_Iij(rigid_body rgb, size_t i, size_t j);
+
+void
+rgb_set_xi(rigid_body rgb, size_t i, double xi);
+
+double
+rgb_get_xi(rigid_body rgb, size_t i);
+
+void
+rgb_set_vi(rigid_body rgb, size_t i, double vi);
+
+double
+rgb_get_vi(rigid_body rgb, size_t i);
+
+void
+rgb_set_wi(rigid_body rgb, size_t i, double wi);
+
+double
+rgb_get_wi(rigid_body rgb, size_t i);
 {% endhighlight C %}
 
-can be used to set and get the individual components of the inertia, and analogously for the other physical properties.
+can be used to set and get the individual components of all the vectors tensors and the mass of the body. This can be convenient in situations when the parameters can be grouped in a few contexts that share the same access method, but can be very cumbersome where there is a myriad of individual parameters that do not share a context. For the sake of this example, consider that the rigid body parameters are not easily grouped and we would need a set/get pair for each parameter in the object, leading to 32 separate access methods.
+
+To simplify the setting and getting we can create an enumeration that contains identifiers or names for the relevant parameters. For instance:
+
+{% highlight C %}
+typedef enum
+{
+    // the total mass
+    rgb_m,
+    // the inertia tensor (resp. C.M.)
+    rgb_Ixx,
+    rgb_Ixy, // Iyx
+    rgb_Ixz, // Izx
+    rgb_Iyy,
+    rgb_Iyz, // Izy
+    rgb_Izz,
+    // the center of mass
+    rgb_x,
+    rgb_y,
+    rgb_z,
+    // center of mass velocity
+    rgb_vx,
+    rgb_vy,
+    rgb_vz,
+    // angular velocity about main axes
+    rgb_wx,
+    rgb_wy,
+    rgb_wz
+}
+rgb_param;
+{% endhighlight C %}
