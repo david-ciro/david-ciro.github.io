@@ -21,7 +21,10 @@ To better illustrate this point, consider the dynamical properties of a rigid bo
 {% highlight C %}
 // rigid_body.h
 
-typedef struct rigid_body_h* rigid_body;
+typedef struct rigid_body_t* rigid_body;
+
+double
+rgb_set_m(rigid_body rgb, double m);
 
 double
 rgb_get_m(rigid_body rgb);
