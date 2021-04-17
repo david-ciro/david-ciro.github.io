@@ -26,7 +26,7 @@ where the object was named using the prefix, leading to a very expressive syntax
 
 {% highlight C %}
 // main.c
-\# include "rigid_body.h"
+# include "rigid_body.h"
 int main()
 {
     // create rgb

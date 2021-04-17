@@ -59,7 +59,7 @@ void print(particle p, FILE* f);
 
 {% endhighlight %}
 
-In this version we have defined a *handler* named `particle` that holds the address of the actual particle type, which is now called `particle_t`. This type of header file is intended to define a clear usage pattern for the particle object, without any distraction caused by the actual implementation of the container type or its methods.
+In this version we have defined a *handle* named `particle` that holds the address of the actual particle type, which is now called `particle_t`. This type of header file is intended to define a clear usage pattern for the particle object, without any distraction caused by the actual implementation of the container type or its methods.
 
 In this case, the regular user can not use `(.)` or `(->)` to access the internal state of the particle, because it has not been specified. Actually, this is ideal for defining a usage pattern with collaborators, instead of providing them with an overwhelming amount of information. The header file can be created collaboratively and later the developer focus solely on the implementation.
 
@@ -106,7 +106,7 @@ void print(particle ph, FILE* f){
 }
 {% endhighlight %}
 
-Here, the letter `h` was added to the names of the handlers in the functions\` arguments, which are casted back to pointers to the actual type `particle_t`. This allows the developer to use the arrow `(->)` operator to access the internal state of the particle in the implementation files. Notice also, that using *setters* and *getters* also allows to check the user input before performing assignments or other operations, so that relevant messages can be generated to identify the possible sources of error in the usage.
+Here, the letter `h` was added to the names of the handle in the functions\` arguments, which are casted back to pointers to the actual type `particle_t`. This allows the developer to use the arrow `(->)` operator to access the internal state of the particle in the implementation files. Notice also, that using *setters* and *getters* also allows to check the user input before performing assignments or other operations, so that relevant messages can be generated to identify the possible sources of error in the usage.
 
 In general, opaque pointers are seen as a way to hide the implementation details of an interface from ordinary clients, and in practice that is the case when binaries are provided instead of the implementation files, however, when the implementation files are available, a better term is *implementation separation*, since it allows advanced users to make improvements while regular users do not need to worry about the implementation. This practice tends to make the APIs more direct, readable and secure, as well as the resulting programs using the libraries. For instance:
 
