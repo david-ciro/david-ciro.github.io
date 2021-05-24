@@ -16,7 +16,7 @@ typedef struct {
 } particle;
 {% endhighlight %}
 
-Since users generally have access to the header files (.h), it is possible for a user to access and modify the state of the particle by simply using the postfix operators `(.)` or `(->)`. This not fundamentally wrong, but it is preferable to define a set of access methods that allows to spot easily when the state gets changed in the code, improving the debugging process and leading to a more readable code. For instance one can define mass *setters and getters* prototypes to access and edit the mass.
+Since users generally have access to the header files (.h), it is possible for a user to access and modify the state of the particle by simply using the postfix operators `(.)` or `(->)`. This is not fundamentally wrong, but it is preferable to define a set of access methods that allows to spot easily when the object state gets changed in the code. In general such practice improves the debugging process and leads to a more readable code. For instance one can define mass *setters and getters* prototypes to access and edit the mass.
 
 {% highlight C %}
 // particle.h
@@ -36,11 +36,11 @@ double get_mass (particle* p){
 }
 {% endhighlight %}
 
-This is done in many situations and creates a level of indirection that *persuades* users to avoid direct access to the internal variables. However, this does not preclude this practice, and the user can still use `p->m` to set or get the mass with minimal code footprint. To actually prevent this practice we will introduce the concept of *incomplete/opaque types* or *dummy pointers* in the context of encapsulation.
+This is done in many situations and creates a level of indirection that *persuades* users to avoid direct access to the internal variables. However, this does not preclude this practice, and the user can still use `p->m` to set or get the mass leaving a minimal code footprint that difficults debugging. To actually prevent this practice we will introduce the concept of *incomplete/opaque types* or *dummy pointers* in the context of encapsulation.
 
 # Encapsulation
 
-[Opaque pointers](https://en.wikipedia.org/wiki/Opaque_pointer) allow us to define a set o methods to perform actions or get data from some unspecified object. For instance, the previous header file can be rewritten as:
+[Opaque pointers](https://en.wikipedia.org/wiki/Opaque_pointer) are incomplete types that allow us to define a set o methods to perform actions or get data from some unspecified object. For instance, the previous header file can be rewritten as:
 
 {% highlight C %}
 // particle.h
@@ -106,7 +106,7 @@ void print(particle ph, FILE* f){
 }
 {% endhighlight %}
 
-Here, the letter `h` was added to the names of the handle in the functions\` arguments, which are casted back to pointers to the actual type `particle_t`. This allows the developer to use the arrow `(->)` operator to access the internal state of the particle in the implementation files. Notice also, that using *setters* and *getters* also allows to check the user input before performing assignments or other operations, so that relevant messages can be generated to identify the possible sources of error in the usage.
+Here, the letter `h` was added to the names of the handle in the functions' arguments, which are casted back to pointers to the actual type `particle_t`. This allows the developer to use the arrow `(->)` operator to access the internal state of the particle in the implementation files. Notice also, that using *setters* and *getters* also allows to check the user input before performing assignments or other operations, so that relevant messages can be generated to identify the possible sources of error in the usage.
 
 In general, opaque pointers are seen as a way to hide the implementation details of an interface from ordinary clients, and in practice that is the case when binaries are provided instead of the implementation files, however, when the implementation files are available, a better term is *implementation separation*, since it allows advanced users to make improvements while regular users do not need to worry about the implementation. This practice tends to make the APIs more direct, readable and secure, as well as the resulting programs using the libraries. For instance:
 

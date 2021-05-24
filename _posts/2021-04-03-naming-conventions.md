@@ -43,3 +43,22 @@ int main()
     return 0;
 }
 {% endhighlight C %}
+
+so that the name of the object tell us which methods must be used for dealing with it.
+
+# Error messages
+Errors can be handled using specialized libraries, but for simple applications they can be reported directly from the methods where they are detected. When reporting the error, a good debugging practice is to provide the name of the method that generated the error, for this matter I use the following pattern:
+
+{% highlight C %}
+int
+pfx_some_method(object, etc){
+    // some procedure that may cause error
+    if (some error condition){
+        fprintf(stderr, "pfx_some_method: error message\n");
+        return ERROR_CODE;
+    }
+    // rest of the method
+}
+{% endhighlight C %}
+
+Providing the name of the method is important, since under certain circumstances the language debuggers will not provide an accurate location of the error. In the previous example the return value of the method is an error code, which means that the error is handled externally, i.e. other method will receive this error and take appropriate action. However, if the method is of void type it is important to take some action locally. In such case is better to break the flow completely using `exit(ERROR_CODE)`, instead of simply reporting the error and letting the program to continue.
