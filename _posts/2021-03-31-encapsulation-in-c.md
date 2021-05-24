@@ -16,7 +16,7 @@ typedef struct {
 } particle;
 {% endhighlight %}
 
-Since users generally have access to the header files (.h), it is possible for a user to access and modify the state of the particle by simply using the postfix operators `(.)` or `(->)`. This is not fundamentally wrong, but it is preferable to define a set of access methods that allows to spot easily when the object state gets changed in the code. In general such practice improves the debugging process and leads to a more readable code. For instance one can define mass *setters and getters* prototypes to access and edit the mass.
+Since users generally have access to the header files (.h), it is possible for a user to access and modify the state of the particle by simply using the postfix operators `(.)` or `(->)`. This is not fundamentally wrong, but it is preferable to define a set of access methods that allows to spot easily when the object state gets changed in the code. In general such practice improves the debugging process and leads to a more readable code. For instance, one can define mass *setters and getters* prototypes to access and edit the mass.
 
 {% highlight C %}
 // particle.h
